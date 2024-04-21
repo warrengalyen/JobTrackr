@@ -9,16 +9,17 @@
   "author": "Warren Galyen",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^5.1.0",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-jwt": "^8.4.1",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-jwt": "^6.1.0",
+    "google-auth-library": "^8.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
-    "node-fetch": "^3.3.2",
-    "nodemon": "^3.1.0"
+    "node-fetch": "^2.6.7",
+    "nodemon": "^2.0.20"
   }
 }
