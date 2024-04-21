@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import {
     Flex,
     Box,
@@ -18,7 +19,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { authenticate, login, signinGoogle } from '../actions/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import React from 'react';
+import { UserContext } from '../context/Context';
 
 interface UserInfo {
     email: string;
@@ -28,6 +29,7 @@ interface UserInfo {
 declare const google: any;
 
 const Login = () => {
+    const { setUserDetails } = useContext(UserContext);
     const navigate = useNavigate();
     const toast = useToast();
     const [values, setValues] = useState<UserInfo>({
@@ -54,14 +56,11 @@ const Login = () => {
             if (res.data) {
                 authenticate(res.data);
                 setTimeout(() => {
-                    setValues({
-                        email: '',
-                        password: '',
-                    });
-                    navigate('/', res.data);
+                    setUserDetails(res.data);
+                    navigate('/');
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             toast({
                 title: error.response.data,
                 status: 'error',
@@ -79,14 +78,11 @@ const Login = () => {
             if (res.data) {
                 authenticate(res.data);
                 setTimeout(() => {
-                    setValues({
-                        email: '',
-                        password: '',
-                    });
-                    navigate('/', res.data);
+                    setUserDetails(res.data);
+          navigate('/', res.data);
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             toast({
                 title: error.response.data,
                 status: 'error',
