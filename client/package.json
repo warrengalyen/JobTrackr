@@ -1,0 +1,38 @@
+{
+  "name": "job-trackr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "author": "Warren Galyen",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "@types/webpack-bundle-analyzer": "^4.6.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "typescript": "^3.9.10",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.1",
+    "axios": "^1.6.8",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.1",
+    "dotenv": "^16.4.5",
+    "html-webpack-plugin": "^5.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.75.0",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^4.0.0",
+    "webpack-bundle-analyzer": "^4.10.2"
+  }
+}
