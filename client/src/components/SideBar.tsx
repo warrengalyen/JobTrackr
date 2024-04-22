@@ -59,7 +59,7 @@ export const SideBar = ({
                     setValue('');
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             if (error.response.status === 400) setError(error.response.data);
             setLoading(false);
         }
@@ -89,7 +89,7 @@ export const SideBar = ({
                     setLoading(false);
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
         }
     };
@@ -114,7 +114,7 @@ export const SideBar = ({
                     setLoading2(false);
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
         }
     };
@@ -129,7 +129,7 @@ export const SideBar = ({
                     bg: 'gray.700',
                 }}
                 mb='2.5rem'
-                px={{ base: 4, md: 2, xl: 4 }}
+                px={{ base: 4, md: 3, xl: 4 }}
                 shadow='md'
                 rounded='md'
                 className='sidebarCard'
@@ -220,7 +220,7 @@ export const SideBar = ({
                     bg: 'gray.700',
                 }}
                 mb='3rem'
-                px={{ base: 4, md: 2, xl: 4 }}
+                px={{ base: 4, md: 3, xl: 4 }}
                 shadow='md'
                 rounded='md'
                 className='sidebarCard'

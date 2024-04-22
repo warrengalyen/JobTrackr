@@ -36,7 +36,7 @@ const Jobs = () => {
                     isAuthenticated().token
                 ));
             setCategory(res.data);
-        } catch (error: any) {
+        } catch (error) {
             console.log(error.response.data);
         }
     };
@@ -149,7 +149,7 @@ const Jobs = () => {
                 </GridItem>
             </Grid>
 
-            <AddJobModal isOpen={isOpen} onClose={onClose} />
+            <AddJobModal isOpen={isOpen} onClose={onClose} categories={category} />
         </Box>
     );
 };
