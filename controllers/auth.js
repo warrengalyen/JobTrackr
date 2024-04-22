@@ -98,7 +98,7 @@ exports.login = async (req, res) => {
             if (!match || err) {
                 return res.status(400).send('Password is incorrect');
             }
-            //Generate jwt signed token and send as reponse to client
+            //Generate jwt signed token and send as response to client
             let token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
                 expiresIn: '7d',
             });
