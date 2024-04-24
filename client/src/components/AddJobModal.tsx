@@ -270,7 +270,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                     </Box>
 
                                     <Box>
-                                        <FormControl id='description' mt={1}>
+                                        <FormControl id='description' mt={1} isRequired>
                                             <FormLabel
                                                 fontSize='sm'
                                                 fontWeight='md'
