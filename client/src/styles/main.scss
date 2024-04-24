@@ -1,5 +1,7 @@
-.main {
-  height: 100vh !important;
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 body {
