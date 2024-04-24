@@ -32,12 +32,13 @@ const JobCard = ({ ...job }) => {
     return (
         <>
             <Box
+                className='job-card'
                 mx='auto'
                 px={8}
                 py={4}
                 mb='1rem'
                 rounded='md'
-                shadow='md'
+                shadow='sm'
                 bg='white'
                 _dark={{
                     bg: 'gray.700',
@@ -77,7 +78,7 @@ const JobCard = ({ ...job }) => {
                         cursor='pointer'
                         bg='gray.600'
                         color='gray.100'
-                        fontSize='0.68rem'
+                        fontSize='0.7rem'
                         rounded='md'
                         _hover={{
                             bg: 'gray.500',
@@ -90,7 +91,7 @@ const JobCard = ({ ...job }) => {
 
                 <Box mt={2}>
                     <Link
-                        fontSize='1.08rem'
+                        fontSize='1.05rem'
                         color='gray.700'
                         _dark={{
                             color: 'white',
@@ -112,7 +113,7 @@ const JobCard = ({ ...job }) => {
                         _dark={{
                             color: 'gray.300',
                         }}
-                        fontSize='0.94rem'
+                        fontSize='0.9rem'
                     >
                         {description.substring(0, 230)}
                         {description.length > 143 && '..'}
@@ -134,9 +135,9 @@ const JobCard = ({ ...job }) => {
                 </Flex> */}
 
                 <Flex justifyContent='space-between' alignItems='center' mt={4}>
-                    <Flex alignItems='center'>
+                    <Flex align='center'>
                         <Image
-                            mr={2}
+                            mr='0.3rem'
                             w={6}
                             h={6}
                             rounded='full'
