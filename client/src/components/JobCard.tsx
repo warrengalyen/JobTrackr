@@ -99,7 +99,8 @@ const JobCard = ({ ...job }) => {
                         }}
                         fontSize='0.94rem'
                     >
-                        {description}
+                        {description.substring(0, 230)}
+                        {description.length > 143 && '..'}
                     </chakra.p>
                 </Box>
 
