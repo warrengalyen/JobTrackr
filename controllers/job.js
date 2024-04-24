@@ -7,6 +7,7 @@ exports.getJobs = async (req, res) => {
     try {
         const jobs = await Job.find({ user: req.params.userId })
             .populate('category')
+            .populate('notes')
             .sort({
                 createdAt: 'ascending',
             });
@@ -14,7 +15,7 @@ exports.getJobs = async (req, res) => {
             res.json(jobs);
         }
     } catch (error) {
-        res.status(400).send('Error Loading jobs');
+        res.status(400).send('Error loading jobs');
     }
 };
 
@@ -35,26 +36,45 @@ exports.fetchJob = async (req, res) => {
 
         // parse the html text and extract titles
         const $ = cheerio.load(body);
-        const title = $('title').text();
-        const desc = $('meta[name=description]').attr('content');
-        const image = $('meta[property=og:image]').attr('content');
+        let company = '';
 
-        const domain = new URL(image).hostname;
-        const pathname = new URL(image).pathname;
-        const protocol = new URL(image).protocol;
+        let title = $('title').text();
+        const desc = $('meta[name=description]').attr('content');
+
+        let image = $("link[rel='icon']").attr('href');
+
+        const domain = new URL(link).hostname;
+        const protocol = new URL(link).protocol;
         const parsed = psl.parse(domain);
 
-        const newImage = protocol + '//www.' + parsed.domain + pathname;
+        let newImage = protocol + '//www.' + parsed.domain + image;
+
+        if (image === undefined && parsed.domain !== 'indeed.com' && parsed.domain !== 'linkedin.com') {
+            image = $('meta[property=og:image]').attr('content');
+            const domain = new URL(image).hostname;
+            const pathname = new URL(image).pathname;
+            const protocol = new URL(image).protocol;
+            const parsed = psl.parse(domain);
+
+            newImage = protocol + '//www.' + parsed.domain + pathname;
+        }
+
+        if (parsed.domain === 'linkedin.com') {
+            //company = $('a.app-aware-link').text();
+            //title =  $('.job-details-jobs-unified-top-card__job-title').text();
+        }
 
         return res.json({
+            company,
             title,
             desc,
             image: newImage,
         });
     } catch (err) {
+        console.log(err);
         if (err.type === 'aborted') {
             clearTimeout(timeout);
-            return res.status(400).send("Could'nt fetch job please enter manually");
+            return res.status(400).send("Couldn't fetch job, please enter manually");
         }
         return res.status(400).send('Error. Try again');
     }
@@ -62,10 +82,11 @@ exports.fetchJob = async (req, res) => {
 
 exports.addJob = async (req, res) => {
     try {
-        const { link, title, description, category, image, endDate } =
+        let { link, company, title, description, category, image, endDate } =
             req.body.jobDetails;
 
         // validate fields
+        if (!company) return res.status(400).send('Please enter company name');
         if (!link) return res.status(400).send('Please enter url');
         if (!category) return res.status(400).send('Please select category');
 
@@ -79,11 +100,15 @@ exports.addJob = async (req, res) => {
         const domain = new URL(link).hostname;
         const parsed = psl.parse(domain);
 
-        if (parsed.domain === 'totaljobs.com')
-            image = 'https://www.totaljobs.com/jsd/img/global/totaljobs.png';
+        if (parsed.domain === 'linkedin.com')
+            image = 'https://static.licdn.com/aero-v1/sc/h/5bukxbhy9xsil5mb7c2wulfbx';
+
+        if (parsed.domain === 'indeed.com')
+            image = 'https://indeed.com/images/favicon.ico';
 
         const job = new Job({
             link,
+            company,
             title,
             description,
             category,

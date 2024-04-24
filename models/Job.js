@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const JobSchema = new Schema(
     {
+        company: {
+            type: String,
+            required: true,
+        },
         title: {
             type: String,
             required: true,
@@ -44,7 +48,14 @@ const JobSchema = new Schema(
         },
         status: {
             type: String,
-            enum: ['applied', 'closed', 'rejected', 'assessment', 'interview'],
+            enum: [
+                'applied',
+                'not applied',
+                'closed',
+                'rejected',
+                'assessment',
+                'interview',
+            ],
         },
     },
     { timestamps: true }

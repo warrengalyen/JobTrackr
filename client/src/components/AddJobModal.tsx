@@ -30,6 +30,7 @@ import { UserContext } from '../context/Context';
 
 interface JobInfo {
     link: string;
+    company: string,
     title: string;
     description?: string;
     category: string;
@@ -45,6 +46,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
     const [loading2, setLoading2] = useState<Boolean>(false);
     const [jobDetails, setJobDetails] = useState<JobInfo>({
         link: '',
+        company: '',
         title: '',
         description: '',
         category: '',
@@ -52,7 +54,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
         image: '',
     });
 
-    const { link, title, description, category, endDate } = jobDetails;
+    const { link, company, title, description, category, endDate } = jobDetails;
 
     const handleChange = (name: string) => (e: { target: { value: any } }) => {
         setJobDetails({ ...jobDetails, [name]: e.target.value });
@@ -69,6 +71,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     setLoading2(false);
                     setJobDetails({
                         ...jobDetails,
+                        company: res.data.company,
                         title: res.data.title,
                         description: res.data.desc,
                         image: res.data.image,
@@ -102,6 +105,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     });
                     setJobDetails({
                         link: '',
+                        company: '',
                         title: '',
                         description: '',
                         category: '',
@@ -126,6 +130,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     setLoading(false);
                     setJobDetails({
                         link: '',
+                        company: '',
                         title: '',
                         description: '',
                         category: '',
@@ -213,7 +218,33 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                     </SimpleGrid>
 
                                     <Box>
-                                        <FormControl id='description' mt={1}>
+                                        <FormControl id='company' mt={1} isRequired>
+                                            <FormLabel
+                                                fontSize='sm'
+                                                fontWeight='md'
+                                                color='gray.700'
+                                                _dark={{
+                                                    color: 'gray.50',
+                                                }}
+                                            >
+                                                Company
+                                            </FormLabel>
+                                            <Input
+                                                placeholder='Enter company name'
+                                                mt={1}
+                                                shadow='sm'
+                                                focusBorderColor='brand.400'
+                                                fontSize={{
+                                                    sm: 'sm',
+                                                }}
+                                                value={company}
+                                                onChange={handleChange('company')}
+                                            />
+                                        </FormControl>
+                                    </Box>
+
+                                    <Box>
+                                        <FormControl id='title' mt={1}>
                                             <FormLabel
                                                 fontSize='sm'
                                                 fontWeight='md'
@@ -302,7 +333,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                         </FormControl>
                                     </Box>
                                     <Box>
-                                        <FormControl id='endDate' mt={1}>
+                                        <FormControl id='endDate' mt={1} isRequired>
                                             <FormLabel
                                                 fontSize='sm'
                                                 fontWeight='md'
