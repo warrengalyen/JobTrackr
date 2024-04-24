@@ -34,7 +34,7 @@ interface JobInfo {
     title: string;
     description?: string;
     category: string;
-    endDate: string;
+    appliedDate: string;
     image: string;
 }
 
@@ -50,11 +50,11 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
         title: '',
         description: '',
         category: '',
-        endDate: '',
+        appliedDate: '',
         image: '',
     });
 
-    const { link, company, title, description, category, endDate } = jobDetails;
+    const { link, company, title, description, category, appliedDate } = jobDetails;
 
     const handleChange = (name: string) => (e: { target: { value: any } }) => {
         setJobDetails({ ...jobDetails, [name]: e.target.value });
@@ -109,7 +109,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                         title: '',
                         description: '',
                         category: '',
-                        endDate: '',
+                        appliedDate: '',
                         image: '',
                     });
                 }, 2000);
@@ -134,7 +134,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                         title: '',
                         description: '',
                         category: '',
-                        endDate: '',
+                        appliedDate: '',
                         image: '',
                     });
                 }}
@@ -351,7 +351,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                         </FormControl>
                                     </Box>
                                     <Box>
-                                        <FormControl id='endDate' mt={1} isRequired>
+                                        <FormControl id='appliedDate' mt={1} isRequired>
                                             <FormLabel
                                                 fontSize='sm'
                                                 fontWeight='md'
@@ -360,7 +360,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                     color: 'gray.50',
                                                 }}
                                             >
-                                                Close Date
+                                                Date Applied
                                             </FormLabel>
                                             <Input
                                                 type='date'
@@ -370,8 +370,8 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                 fontSize={{
                                                     sm: 'sm',
                                                 }}
-                                                value={endDate}
-                                                onChange={handleChange('endDate')}
+                                                value={new Date().toISOString().split('T')[0]}
+                                                onChange={handleChange('appliedDate')}
                                             />
                                         </FormControl>
                                     </Box>

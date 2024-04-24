@@ -21,13 +21,16 @@ const JobCard = ({ ...job }) => {
         title,
         description,
         category,
-        endDate,
+        appliedDate,
         domain,
         image,
         status,
         notes,
         createdAt,
     } = job;
+
+    const daysSinceApplied = moment().diff(moment(appliedDate), 'days', false);
+    console.log(daysSinceApplied > 0);
 
     return (
         <>
@@ -49,7 +52,7 @@ const JobCard = ({ ...job }) => {
                     <chakra.span
                         fontSize='0.92rem'
                         color={
-                            moment(endDate).diff(Date.now()) <= 0 ? 'red.400' : 'gray.600'
+                           'gray.600'
                         }
                         _dark={{
                             color: 'gray.400',
@@ -59,16 +62,14 @@ const JobCard = ({ ...job }) => {
                         <Tooltip
                             hasArrow
                             label={
-                                moment(endDate).diff(Date.now()) <= 0
-                                    ? `Closed ${moment(endDate).fromNow()}`
-                                    : `Closing ${moment(endDate).fromNow()}`
+                                daysSinceApplied > 0 ? daysSinceApplied + ' Day(s) since applied' : ''
                             }
                             bg='gray.700'
                             color='white'
                             placement='top'
                             fontSize='0.75rem'
                         >
-                            {moment(createdAt).format('MMM Do, YYYY')}
+                            {moment(appliedDate).format('MMM Do, YYYY')}
                         </Tooltip>
                     </chakra.span>
                     <Box
