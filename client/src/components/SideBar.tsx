@@ -50,7 +50,7 @@ export const SideBar = ({
                     onClose();
                     setCategory(res.data);
                     toast({
-                        title: value + ' added to your Categories',
+                        title: `'${value}' added to your Categories`,
                         status: 'success',
                         duration: 4000,
                         isClosable: true,
@@ -58,7 +58,7 @@ export const SideBar = ({
                     setValue('');
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             if (error.response.status === 400) setError(error.response.data);
             setLoading(false);
         }
@@ -66,7 +66,7 @@ export const SideBar = ({
 
     const handleCategoryEdit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
-
+        setError('');
         try {
             const res = await editCategory(
                 userDetails.user._id,
@@ -82,8 +82,8 @@ export const SideBar = ({
                     setLoading(false);
                 }, 2000);
             }
-        } catch (error: any) {
-            console.log(error);
+        } catch (error) {
+            setError(error.response.data);
         }
     };
 
@@ -101,7 +101,7 @@ export const SideBar = ({
                     setLoading2(false);
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
         }
     };
@@ -202,6 +202,8 @@ export const SideBar = ({
             <Categories
                 loading={loading}
                 loading2={loading2}
+                error={error}
+                setError={setError}
                 defaultActive={defaultActive}
                 edit={edit}
                 onOpen={onOpen}
