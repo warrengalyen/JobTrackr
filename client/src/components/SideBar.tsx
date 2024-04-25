@@ -1,14 +1,8 @@
 import React, { useContext, useState } from 'react';
-import {
-    Flex,
-    chakra,
-    useDisclosure,
-    useToast,
-    Box,
-    Badge,
-} from '@chakra-ui/react';
+import { useDisclosure, useToast } from '@chakra-ui/react';
 import AddCategoryModal from './AddCategoryModal';
 import Categories from './Categories';
+import Stats from './Stats';
 import { UserContext } from '../context/Context';
 import {
     addCategory,
@@ -59,7 +53,7 @@ export const SideBar = ({
                     setValue('');
                 }, 2000);
             }
-        } catch (error) {
+        } catch (error: any) {
             if (error.response.status === 400) setError(error.response.data);
             setLoading(false);
         }
@@ -83,7 +77,7 @@ export const SideBar = ({
                     setLoading(false);
                 }, 2000);
             }
-        } catch (error) {
+        } catch (error: any) {
             setError(error.response.data);
         }
     };
@@ -102,104 +96,14 @@ export const SideBar = ({
                     setLoading2(false);
                 }, 2000);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
         }
     };
 
     return (
         <>
-            <Box
-                w='full'
-                py={3}
-                bg='white'
-                _dark={{
-                    bg: 'gray.700',
-                }}
-                mb='1.5rem'
-                px={{ base: 4, md: 3, xl: 4 }}
-                shadow='sm'
-                rounded='md'
-                className='sidebarCard'
-            >
-                <Box
-                    fontSize='md'
-                    fontWeight='bold'
-                    color='gray.700'
-                    _dark={{
-                        color: 'gray.50',
-                    }}
-                    mb='0.7rem'
-                >
-                    <i className='fa-solid fa-chart-pie'></i> Stats
-                </Box>
-                <Flex justifyContent='space-between' alignItems='center' mb='0.3rem'>
-                    <chakra.span
-                        fontSize='0.94rem'
-                        color='gray.600'
-                        _dark={{
-                            color: 'white',
-                        }}
-                    >
-                        <Flex align='center'>
-                            <Box
-                                fontSize='0.7rem'
-                                mr='0.4rem'
-                                color='gray.600'
-                                _dark={{ color: 'gray.300' }}
-                            >
-                                <i className='fa-solid fa-chart-simple'></i>
-                            </Box>{' '}
-                            <Box color='gray.600' _dark={{ color: 'gray.300' }}>
-                                This month
-                            </Box>
-                        </Flex>
-                    </chakra.span>
-                    <chakra.span
-                        color='brand.800'
-                        _dark={{
-                            color: 'brand.900',
-                        }}
-                    >
-                        <Badge rounded='lg' fontSize='xs' colorScheme='linkedin'>
-                            15
-                        </Badge>
-                    </chakra.span>
-                </Flex>
-                <Flex justifyContent='space-between' alignItems='center' mb='0.3rem'>
-                    <chakra.span
-                        fontSize='0.94rem'
-                        color='gray.600'
-                        _dark={{
-                            color: 'white',
-                        }}
-                    >
-                        <Flex align='center'>
-                            <Box
-                                fontSize='0.7rem'
-                                mr='0.4rem'
-                                color='gray.600'
-                                _dark={{ color: 'gray.300' }}
-                            >
-                                <i className='fa-solid fa-chart-column'></i>
-                            </Box>{' '}
-                            <Box color='gray.600' _dark={{ color: 'gray.300' }}>
-                                Last month
-                            </Box>
-                        </Flex>
-                    </chakra.span>
-                    <chakra.span
-                        color='brand.800'
-                        _dark={{
-                            color: 'brand.900',
-                        }}
-                    >
-                        <Badge rounded='lg' fontSize='xs' colorScheme='linkedin'>
-                            150
-                        </Badge>
-                    </chakra.span>
-                </Flex>
-            </Box>
+            <Stats />
             <Categories
                 loading={loading}
                 loading2={loading2}

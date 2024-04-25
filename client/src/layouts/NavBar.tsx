@@ -24,11 +24,11 @@ const NavBar = () => {
     const { userDetails, setUserDetails } = useContext(UserContext);
 
     useEffect(() => {
-        localStorage.getItem('track-jobs');
+        localStorage.getItem('trackr-jobs');
     }, [setUserDetails]);
 
     const handleLogout = () => {
-        window.localStorage.removeItem('track-jobs');
+        window.localStorage.removeItem('trackr-jobs');
         window.location.reload();
     };
 
@@ -57,9 +57,9 @@ const NavBar = () => {
                             }}
                         >
                             <Flex alignItems={'center'}>
-                                <Box as='span' pb='0.2rem'>
-                                    <i className='fa-solid fa-stopwatch'></i>
-                                </Box>
+                                {/*<Box as='span' pb='0.2rem'>*/}
+                                {/*    <i className='fa-solid fa-stopwatch'></i>*/}
+                                {/*</Box>*/}
                                 <Text ml='0.12rem'>JobTrackr</Text>
                             </Flex>
                         </Link>
