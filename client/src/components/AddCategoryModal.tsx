@@ -13,6 +13,8 @@ import {
     Text,
     FormControl,
     Spinner,
+    Box,
+    Flex,
 } from '@chakra-ui/react';
 
 const AddCategoryModal = ({
@@ -27,17 +29,21 @@ const AddCategoryModal = ({
                           }: any) => {
     return (
         <>
-            <Modal onClose={onClose} size={'md'} isOpen={isOpen}>
+            <Modal onClose={onClose} size={'sm'} isOpen={isOpen}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader fontSize='1.1rem' fontWeight='500'>
+                    <ModalHeader fontSize='1.1rem' fontWeight='500' mb='0.1rem'>
                         Add Category
                     </ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody>
-                        <Stack spacing={4} color='gray.600'>
+                    <ModalBody mb='1rem'>
+                        <Stack color='gray.600'>
                             <FormControl>
                                 <Input
+                                    _dark={{
+                                        color: 'gray.50',
+                                        _placeholder: { color: 'gray.200' },
+                                    }}
                                     size='sm'
                                     autoFocus
                                     borderColor={error ? 'red' : '#e2e8f0'}
@@ -58,30 +64,32 @@ const AddCategoryModal = ({
                                 </Text>
                             </FormControl>
                         </Stack>
+                        <Flex justify='flex-end' mt='0.9rem'>
+                            <Box>
+                                <Button
+                                    mr='0.7rem'
+                                    size='sm'
+                                    fontWeight='500'
+                                    variant='ghost'
+                                    onClick={() => {
+                                        onClose();
+                                        setValue('');
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    minW='4.334rem'
+                                    size='sm'
+                                    fontWeight='500'
+                                    colorScheme='linkedin'
+                                    onClick={handleSubmit}
+                                >
+                                    {loading ? <Spinner thickness='4px' size='md' /> : 'Submit'}
+                                </Button>
+                            </Box>
+                        </Flex>
                     </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            mr='0.7rem'
-                            size='sm'
-                            fontWeight='500'
-                            variant='ghost'
-                            onClick={() => {
-                                onClose();
-                                setValue('');
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            size='sm'
-                            loadingText='Submitting'
-                            fontWeight='500'
-                            colorScheme='linkedin'
-                            onClick={handleSubmit}
-                        >
-                            {loading ? <Spinner thickness='4px' size='md' /> : 'Submit'}
-                        </Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
