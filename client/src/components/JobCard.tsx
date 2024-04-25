@@ -105,6 +105,8 @@ const JobCard = ({ ...job }) => {
                             },
                             textDecor: 'none',
                         }}
+                        href={`${link}`}
+                        target={`_blank`}
                     >
                         {title} - {company}
                     </Link>
@@ -154,7 +156,6 @@ const JobCard = ({ ...job }) => {
                             }}
                             fontSize='0.9rem'
                             fontWeight='700'
-                            cursor='pointer'
                         >
                             {domain}
                         </Box>
