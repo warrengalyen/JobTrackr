@@ -15,6 +15,7 @@ import {
     Stack,
     useColorMode,
     Center,
+    Portal,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { UserContext } from '../context/Context';
@@ -24,11 +25,11 @@ const NavBar = () => {
     const { userDetails, setUserDetails } = useContext(UserContext);
 
     useEffect(() => {
-        localStorage.getItem('trackr-jobs');
+        localStorage.getItem('todo-jobs');
     }, [setUserDetails]);
 
     const handleLogout = () => {
-        window.localStorage.removeItem('trackr-jobs');
+        window.localStorage.removeItem('todo-jobs');
         window.location.reload();
     };
 
@@ -36,14 +37,14 @@ const NavBar = () => {
         <>
             <Box bg={useColorModeValue('white', 'gray.700')}>
                 <Flex
-                    h={16}
+                    h={'3.8rem'}
                     px={{ base: '1rem', md: '5rem', xl: '12rem' }}
                     alignItems={'center'}
                     justifyContent={'space-between'}
                 >
                     <Box
                         fontWeight={'bold'}
-                        fontSize={'1.7rem'}
+                        fontSize={'1.6rem'}
                         color='gray.700'
                         _dark={{
                             color: 'gray.50',
@@ -57,10 +58,10 @@ const NavBar = () => {
                             }}
                         >
                             <Flex alignItems={'center'}>
-                                {/*<Box as='span' pb='0.2rem'>*/}
-                                {/*    <i className='fa-solid fa-stopwatch'></i>*/}
-                                {/*</Box>*/}
-                                <Text ml='0.12rem'>JobTrackr</Text>
+                                {/* <Box as='span' pb='0.2rem'>
+                  <i className='fa-solid fa-stopwatch'></i>
+                </Box> */}
+                                <Text ml='0.12rem'>Todojobs</Text>
                             </Flex>
                         </Link>
                     </Box>
@@ -89,6 +90,8 @@ const NavBar = () => {
                                         }}
                                     >
                                         <Avatar
+                                            // h={'2.8rem'}
+                                            // w={'2.8rem'}
                                             size={'md'}
                                             name={
                                                 userDetails &&
@@ -96,33 +99,37 @@ const NavBar = () => {
                                                 ' ' +
                                                 userDetails.user.lastName
                                             }
+                                            src={userDetails && userDetails.user.picture}
                                         />
                                     </MenuButton>
-                                    <MenuList alignItems={'center'}>
-                                        <Center>
-                                            <Avatar
-                                                size={'xl'}
-                                                name={
-                                                    userDetails &&
-                                                    userDetails.user.firstName +
-                                                    ' ' +
-                                                    userDetails.user.lastName
-                                                }
-                                                mb='0.5rem'
-                                            />
-                                        </Center>
-                                        <Center>
-                                            <Box>
-                                                {userDetails &&
-                                                    userDetails.user.firstName +
-                                                    ' ' +
-                                                    userDetails.user.lastName}
-                                            </Box>
-                                        </Center>
-                                        <MenuDivider />
-                                        <MenuItem>Account Settings</MenuItem>
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    </MenuList>
+                                    <Portal>
+                                        <MenuList alignItems={'center'}>
+                                            <Center>
+                                                <Avatar
+                                                    size={'xl'}
+                                                    name={
+                                                        userDetails &&
+                                                        userDetails.user.firstName +
+                                                        ' ' +
+                                                        userDetails.user.lastName
+                                                    }
+                                                    src={userDetails && userDetails.user.picture}
+                                                    mb='0.5rem'
+                                                />
+                                            </Center>
+                                            <Center>
+                                                <Box>
+                                                    {userDetails &&
+                                                        userDetails.user.firstName +
+                                                        ' ' +
+                                                        userDetails.user.lastName}
+                                                </Box>
+                                            </Center>
+                                            <MenuDivider />
+                                            <MenuItem>Account Settings</MenuItem>
+                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                        </MenuList>
+                                    </Portal>
                                 </Menu>
                             )}
                         </Stack>

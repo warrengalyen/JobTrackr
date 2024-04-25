@@ -20,18 +20,18 @@ import { useEffect, useState } from 'react';
 import { authenticate, login, signinGoogle } from '../middlewares/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/Context';
-import useScript from '../hooks/useScript';
 
 interface UserInfo {
     email: string;
     password: string;
 }
 
+declare const google: any;
+
 const Login = () => {
     const { setUserDetails } = useContext(UserContext);
     const navigate = useNavigate();
     const toast = useToast();
-    const { loaded, error } = useScript('https://apis.google.com/js/platform.js');
     const [values, setValues] = useState<UserInfo>({
         email: '',
         password: '',
@@ -60,7 +60,7 @@ const Login = () => {
                     navigate('/');
                 }, 2000);
             }
-        } catch (error) {
+        } catch (error: any) {
             toast({
                 title: error.response.data,
                 status: 'error',
@@ -79,10 +79,10 @@ const Login = () => {
                 authenticate(res.data);
                 setTimeout(() => {
                     setUserDetails(res.data);
-          navigate('/', res.data);
+                    navigate('/', res.data);
                 }, 2000);
             }
-        } catch (error) {
+        } catch (error: any) {
             toast({
                 title: error.response.data,
                 status: 'error',
@@ -95,28 +95,24 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (loaded && !error && (window as any).google) {
-            (window as any).google.accounts.id.initialize({
-                client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-                callback: handleGoogleLogin,
-            });
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            callback: handleGoogleLogin,
+        });
 
-            (window as any).google.accounts.id.renderButton(
-                document.getElementById('loginGoogle'),
-                {
-                    type: 'standard',
-                    // theme: 'filled_black',
-                    size: 'large',
-                    text: 'signin_with',
-                    shape: 'pill',
-                }
-            );
-        }
-    }, [loaded, error]);
+        google.accounts.id.renderButton(document.getElementById('loginGoogle'), {
+            type: 'standard',
+            // theme: 'filled_black',
+            size: 'large',
+            text: 'signin_with',
+            shape: 'pill',
+        });
+    }, []);
 
     return (
         <>
-            <Flex align={'center'} justify={'center'} mt='2rem'>
+            <Flex align={'center'} justify={'center'} mt='2rem' mb='3rem'>
                 <Stack
                     spacing={8}
                     mx={'auto'}
@@ -130,7 +126,7 @@ const Login = () => {
                             fontSize={'1.6rem'}
                             color={'gray.700'}
                             _dark={{
-                                color: 'white',
+                                color: 'gray.50',
                             }}
                             className='heading'
                         >
@@ -138,7 +134,7 @@ const Login = () => {
                         </Heading>
                         <Text
                             _dark={{
-                                color: 'white',
+                                color: 'gray.50',
                             }}
                             fontSize={'1xl'}
                             color={'gray.600'}
@@ -155,28 +151,28 @@ const Login = () => {
                     >
                         <Stack spacing={4} color='gray.600'>
                             <Box id='loginGoogle' mx='auto' mb='1rem'></Box>
-                            <FormControl id='email' isRequired>
-                                <FormLabel
-                                    _dark={{
-                                        color: 'white',
-                                    }}
-                                >
-                                    Email address
-                                </FormLabel>
+                            <FormControl
+                                id='email'
+                                isRequired
+                                _dark={{
+                                    color: 'gray.50',
+                                }}
+                            >
+                                <FormLabel>Email address</FormLabel>
                                 <Input
                                     type='email'
                                     value={email}
                                     onChange={handleChange('email')}
                                 />
                             </FormControl>
-                            <FormControl id='password' isRequired>
-                                <FormLabel
-                                    _dark={{
-                                        color: 'white',
-                                    }}
-                                >
-                                    Password
-                                </FormLabel>
+                            <FormControl
+                                id='password'
+                                isRequired
+                                _dark={{
+                                    color: 'gray.50',
+                                }}
+                            >
+                                <FormLabel>Password</FormLabel>
                                 <InputGroup>
                                     <Input
                                         type={showPassword ? 'text' : 'password'}
@@ -211,7 +207,7 @@ const Login = () => {
                             </Stack>
                             <Box
                                 _dark={{
-                                    color: 'white',
+                                    color: 'gray.50',
                                 }}
                                 textAlign='center'
                                 fontSize='0.95rem'
