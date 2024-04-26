@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useDisclosure, useToast } from '@chakra-ui/react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {useDisclosure, useToast} from '@chakra-ui/react';
 import AddCategoryModal from './AddCategoryModal';
 import Categories from './Categories';
 import Stats from './Stats';
 import Search from './Search';
 import Status from './Status';
 import Jobsites from './Jobsites';
-import { UserContext } from '../context/Context';
+import {UserContext} from '../context/Context';
 import {
     addCategory,
     deleteCategory,
@@ -20,11 +20,13 @@ export const SideBar = ({
                             setActiveCat,
                             status,
                             setStatus,
+                            search,
                             setSearch,
+                            sidebar,
                         }: any) => {
     const toast = useToast();
-    const { userDetails } = useContext(UserContext);
-    const { isOpen, onClose, onOpen } = useDisclosure();
+    const {userDetails} = useContext(UserContext);
+    const {isOpen, onClose, onOpen} = useDisclosure();
     const [loading, setLoading] = useState<Boolean>(false);
     const [loading2, setLoading2] = useState<Boolean>(false);
     const [error, setError] = useState('');
@@ -41,7 +43,7 @@ export const SideBar = ({
         try {
             const res = await addCategory(
                 userDetails.user._id,
-                { name: value },
+                {name: value},
                 userDetails.token
             );
             if (res.data) {
@@ -73,7 +75,7 @@ export const SideBar = ({
         try {
             const res = await editCategory(
                 userDetails.user._id,
-                { categoryId: edit, name: editValue },
+                {categoryId: edit, name: editValue},
                 userDetails.token
             );
             setLoading(true);
@@ -95,7 +97,7 @@ export const SideBar = ({
         try {
             const res = await deleteCategory(
                 userDetails.user._id,
-                { categoryId: categoryId },
+                {categoryId: categoryId},
                 userDetails.token
             );
             setLoading2(true);
@@ -112,10 +114,10 @@ export const SideBar = ({
 
     return (
         <>
-            <Search setSearch={setSearch}/>
-            <Stats />
-            <Status activeStatus={status} status={status} setStatus={setStatus} />
-            <Jobsites />
+            <Search search={search} setSearch={setSearch} sidebar={sidebar} />
+            <Stats/>
+            <Status activeStatus={status} status={status} setStatus={setStatus}/>
+            <Jobsites/>
             <Categories
                 loading={loading}
                 loading2={loading2}
