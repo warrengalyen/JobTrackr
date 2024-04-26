@@ -56,11 +56,12 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
         handler: () => onClose(),
     });
 
-    const handleChange = (name: string) => (e: { target: { value: any } }) => {
+    const handleChange = (name: string) => (e: { target: { value: string } }) => {
         setJobDetails({ ...jobDetails, [name]: e.target.value });
         setError('');
     };
 
+    // Function for fetching job details using node-fetch from server
     const handlefetchJob = async () => {
         try {
             setLoading2(true);
@@ -77,7 +78,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     });
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             if (error.response.status === 400) setError(error.response.data);
             setLoading2(false);
             toast({
@@ -90,6 +91,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
         }
     };
 
+    // Function for adding new job
     const handleAddJob = async () => {
         setError('');
         try {
@@ -120,7 +122,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     });
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             if (error.response.status === 400) setError(error.response.data);
             setLoading(false);
             toast({
@@ -147,7 +149,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     shadow='md'
                     h='100vh'
                     w={{ base: '100vw', md: 'lg' }}
-                    zIndex={29999}
+                    zIndex={10}
                     bg={useColorModeValue('white', 'gray.700')}
                 >
                     <Button
