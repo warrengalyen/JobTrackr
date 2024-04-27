@@ -48,10 +48,8 @@ exports.fetchJob = async (req, res) => {
         // parse the html text and extract titles
         const $ = cheerio.load(body);
         let company = '';
-
         let title = $('title').text();
         const desc = $('meta[name=description]').attr('content');
-
         let image = $("link[rel='icon']").attr('href');
 
         const domain = new URL(link).hostname;
@@ -75,6 +73,10 @@ exports.fetchJob = async (req, res) => {
             //title =  $('.job-details-jobs-unified-top-card__job-title').text();
         }
 
+        // if (title || desc === undefined) {
+        //   return res.status(400).send("Couldn't fetch job please enter manually");
+        // }
+
         return res.json({
             company,
             title,
@@ -87,7 +89,8 @@ exports.fetchJob = async (req, res) => {
             clearTimeout(timeout);
             return res.status(400).send("Couldn't fetch job, please enter manually");
         }
-        return res.status(400).send('Error. Try again');
+        console.log(err);
+        return res.status(400).send('Error. Please enter job manually');
     }
 };
 
@@ -133,11 +136,41 @@ exports.addJob = async (req, res) => {
 
         await job.save();
 
-        const jobs = await Job.find({ user: req.params.userId });
+        const jobs = await Job.find({ user: req.params.userId })
+            .populate('category')
+            .populate({ path: 'notes', options: { sort: { createdAt: -1 } } })
+            .sort({
+                createdAt: 'descending',
+            });
         if (jobs) {
             return res.json(jobs);
         }
     } catch (err) {
+        console.log(err);
+        return res.status(400).send('Error. Try again');
+    }
+};
+
+exports.changeJobStatus = async (req, res) => {
+    const { status, userId } = req.body;
+    try {
+        await Job.updateOne(
+            { _id: req.params.jobId, user: userId },
+            { status: status },
+            { upsert: true }
+        );
+
+        const jobs = await Job.find({ user: userId })
+            .populate('category')
+            .populate({ path: 'notes', options: { sort: { createdAt: -1 } } })
+            .sort({
+                createdAt: 'descending',
+            });
+        if (jobs) {
+            return res.json(jobs);
+        }
+    } catch (err) {
+        console.log(err);
         return res.status(400).send('Error. Try again');
     }
 };
