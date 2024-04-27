@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, {useContext, useState, useRef} from 'react';
 import {
     Box,
     Flex,
@@ -15,9 +15,11 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import NotesModal from './NotesModal';
-import { colors, colors_hover } from '../utils/globalVars';
-import { changeJobStatus } from '../middlewares/job';
-import { JobContext, UserContext } from '../context/Context';
+import {colors, colors_hover} from '../utils/globalVars';
+import {changeJobStatus} from '../middlewares/job';
+import {JobContext, UserContext} from '../context/Context';
+import EditJobModal from './EditJobModal';
+
 const Website = require('../public/images/website.png');
 
 const JobCard = ({
@@ -31,6 +33,7 @@ const JobCard = ({
                      setError,
                      handleAddNote,
                      handleDeleteNote,
+                     categories,
                      ...job
                  }: any) => {
     const {
@@ -49,9 +52,10 @@ const JobCard = ({
     } = job;
     const ref = React.useRef();
     const toast = useToast();
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { userDetails } = useContext(UserContext);
-    const { setUserJobs } = useContext(JobContext);
+    const editModal = useDisclosure();
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const {userDetails} = useContext(UserContext);
+    const {setUserJobs} = useContext(JobContext);
     const [currentStatus, setCurrentStatus] = useState<string | null>('');
 
     useOutsideClick({
@@ -64,7 +68,7 @@ const JobCard = ({
         try {
             const res = await changeJobStatus(
                 jobId,
-                { userId: userDetails.user._id, status: newStatus },
+                {userId: userDetails.user._id, status: newStatus},
                 userDetails.token
             );
             if (res.data) {
@@ -91,14 +95,13 @@ const JobCard = ({
     };
 
     const daysSinceApplied = moment().diff(moment(appliedDate), 'days', false);
-    console.log(daysSinceApplied > 0);
 
     return (
         <>
             <Box
                 className='job-card'
                 mx='auto'
-                px={8}
+                px={{base: 5, md: 6}}
                 py={4}
                 mb='1rem'
                 rounded='md'
@@ -107,13 +110,13 @@ const JobCard = ({
                 _dark={{
                     bg: 'gray.700',
                 }}
-                w={{ base: 'full', md: 'full' }}
+                w={{base: 'full', md: 'full'}}
             >
                 <Flex justifyContent='space-between' alignItems='center'>
                     <chakra.span
                         fontSize='0.92rem'
                         color={
-                           'gray.600'
+                            'gray.600'
                         }
                         _dark={{
                             color: 'gray.400',
@@ -146,7 +149,7 @@ const JobCard = ({
                         fontSize='0.7rem'
                         rounded='md'
                         onClick={() => {
-                            setCurrentStatus(currentStatus != _id ? _id : '');
+                            setCurrentStatus(currentStatus !== _id ? _id : '');
                         }}
                         _hover={{
                             bg: colors_hover[status],
@@ -161,11 +164,11 @@ const JobCard = ({
 
                         <Box
                             bg='white'
-                            _dark={{ bg: 'gray.700', borderColor: 'gray.500' }}
+                            _dark={{bg: 'gray.700', borderColor: 'gray.500'}}
                             pt={1}
                             pb={2}
                             pl={2}
-                            w='7rem'
+                            w='7.2rem'
                             display={currentStatus === _id ? 'flex' : 'none'}
                             border='1px'
                             borderColor='gray.200'
@@ -186,24 +189,30 @@ const JobCard = ({
                                 textTransform='capitalize'
                             >
                                 {Object.keys(colors).map((status: string, i: any) => {
-                                    return (
-                                        <ListItem
-                                            display={currentStatus === _id ? 'flex' : 'none'}
-                                            alignItems='center'
-                                            cursor='pointer'
-                                            key={i}
-                                            px='0.5rem'
-                                            color={colors[status]}
-                                            onClick={() => handleJobStatus(_id, status)}
-                                            _hover={{ bg: 'gray.200', _dark: { bg: 'gray.600' } }}
-                                            rounded='sm'
-                                        >
-                                            {status}
-                                            <Box color={colors[status]} fontSize='0.4rem' ml='0.3rem'>
-                                                <i className='fa-solid fa-stop'></i>
-                                            </Box>
-                                        </ListItem>
-                                    );
+                                    if (status !== job.status) {
+                                        return (
+                                            <ListItem
+                                                display={currentStatus === _id ? 'flex' : 'none'}
+                                                alignItems='center'
+                                                cursor='pointer'
+                                                key={i}
+                                                px='0.5rem'
+                                                color={colors[status]}
+                                                onClick={() => handleJobStatus(_id, status)}
+                                                _hover={{bg: 'gray.200', _dark: {bg: 'gray.600'}}}
+                                                rounded='sm'
+                                            >
+                                                {status}
+                                                <Box
+                                                    color={colors[status]}
+                                                    fontSize='0.4rem'
+                                                    ml='0.3rem'
+                                                >
+                                                    <i className='fa-solid fa-stop'></i>
+                                                </Box>
+                                            </ListItem>
+                                        );
+                                    }
                                 })}
 
                                 {/* <ListItem>Lorem ipsum</ListItem> */}
@@ -286,18 +295,6 @@ const JobCard = ({
                             >
                                 <i className='fa-solid fa-file-pen'></i>
                             </Tooltip>
-                        </Box>
-                        <Box cursor='pointer'>
-                            <Tooltip
-                                hasArrow
-                                label='Add to calender'
-                                bg='gray.300'
-                                color='black'
-                                placement='top'
-                                fontSize='0.75rem'
-                            >
-                                <i className='fa-solid fa-calendar-days'></i>
-                            </Tooltip>
                             {job && notes.length > 0 && (
                                 <Badge
                                     bg='gray.300'
@@ -310,23 +307,54 @@ const JobCard = ({
                                 </Badge>
                             )}
                         </Box>
-                        <NotesModal
-                            isOpen={isOpen}
-                            onClose={onClose}
-                            job={job}
-                            loading={loading}
-                            setLoading={setLoading}
-                            loading2={loading2}
-                            error={error}
-                            note={note}
-                            setNote={setNote}
-                            setError={setError}
-                            handleAddNote={handleAddNote}
-                            handleDeleteNote={handleDeleteNote}
-                        />
+                        <Box cursor='pointer' mr='0.5rem'>
+                            <Tooltip
+                                hasArrow
+                                label='Add to calender'
+                                bg='gray.300'
+                                color='black'
+                                placement='top'
+                                fontSize='0.75rem'
+                            >
+                                <i className='fa-solid fa-calendar-days'></i>
+                            </Tooltip>
+                        </Box>
+                        <Box cursor='pointer' onClick={() => editModal.onOpen()}>
+                            <Tooltip
+                                hasArrow
+                                label='Edit job'
+                                bg='gray.300'
+                                color='black'
+                                placement='top'
+                                fontSize='0.75rem'
+                            >
+                                <i className='fa-solid fa-pen-to-square'></i>
+                            </Tooltip>
+                        </Box>
                     </Flex>
                 </Flex>
             </Box>
+            <NotesModal
+                isOpen={isOpen}
+                onClose={onClose}
+                job={job}
+                loading={loading}
+                setLoading={setLoading}
+                loading2={loading2}
+                error={error}
+                note={note}
+                setNote={setNote}
+                setError={setError}
+                handleAddNote={handleAddNote}
+                handleDeleteNote={handleDeleteNote}
+            />
+            <EditJobModal
+                job={job}
+                editModal={editModal}
+                isOpen={editModal.isOpen}
+                onClose={editModal.onClose}
+                categories={categories}
+            />
         </>
     );
 };
