@@ -73,10 +73,10 @@ const Register = () => {
                         position: 'top',
                     });
                     setUserDetails(res.data);
-                    navigate('/');
+                    navigate('/jobs');
                 }, 2000);
             }
-        } catch (error: any) {
+        } catch (error) {
             toast({
                 title: error.response.data,
                 status: 'error',
@@ -99,7 +99,7 @@ const Register = () => {
                     navigate('/');
                 }, 3000);
             }
-        } catch (error: any) {
+        } catch (error) {
             toast({
                 title: error.response.data,
                 status: 'error',
@@ -128,8 +128,8 @@ const Register = () => {
     }, []);
 
     return (
-        <>
-            <Flex align={'center'} justify={'center'} mt='1.5rem' mb='3rem'>
+        <Box className='main'>
+            <Flex align={'center'} justify={'center'} mt='1.5rem'>
                 <Stack
                     spacing={8}
                     mx={'auto'}
@@ -281,7 +281,7 @@ const Register = () => {
                     </Box>
                 </Stack>
             </Flex>
-        </>
+        </Box>
     );
 };
 
