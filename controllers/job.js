@@ -269,6 +269,7 @@ exports.getJobSites = async (req, res) => {
                     count: { $sum: 1 },
                 },
             },
+            { $sort: { count: -1 } },
         ]);
 
         return res.json(sites);
