@@ -44,6 +44,7 @@ const Register = () => {
     });
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [registerText, setRegisterText] = useState<string>('Register');
 
     const { firstName, lastName, email, password } = values;
 
@@ -53,7 +54,7 @@ const Register = () => {
 
     const handleRegister = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
-
+        setRegisterText('Please wait..');
         try {
             const res = await register({
                 firstName: firstName,
@@ -85,10 +86,12 @@ const Register = () => {
                 position: 'top',
             });
             setLoading(false);
+            setRegisterText('Register');
         }
     };
 
     const handleGoogleRegister = async (response: any) => {
+        setRegisterText('Please wait..');
         try {
             const res = await signinGoogle(response);
             setLoading(true);
@@ -107,6 +110,7 @@ const Register = () => {
                 isClosable: true,
             });
             setLoading(false);
+            setRegisterText('Register');
         }
     };
 
@@ -254,7 +258,11 @@ const Register = () => {
                                         bg: 'linkedin.600',
                                     }}
                                 >
-                                    {loading ? <Spinner thickness='4px' size='lg' /> : 'Register'}
+                                    {loading ? (
+                                        <Spinner thickness='4px' size='lg' />
+                                    ) : (
+                                        registerText
+                                    )}
                                 </Button>
                             </Stack>
                             <Box
