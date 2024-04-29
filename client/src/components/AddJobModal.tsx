@@ -27,6 +27,7 @@ import { UserContext, JobContext } from '../context/Context';
 interface JobInfo {
     link: string;
     title: string;
+    company: string;
     description?: string;
     category: string;
     endDate: string;
@@ -44,13 +45,14 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
     const [jobDetails, setJobDetails] = useState<JobInfo>({
         link: '',
         title: '',
+        company: '',
         description: '',
         category: '',
         endDate: '',
         image: '',
     });
 
-    const { link, title, description, category, endDate } = jobDetails;
+    const { link, title, company, description, category, endDate } = jobDetails;
 
     useOutsideClick({
         ref: ref,
@@ -117,6 +119,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                     setJobDetails({
                         link: '',
                         title: '',
+                        company: '',
                         description: '',
                         category: '',
                         endDate: '',
@@ -178,6 +181,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                             setJobDetails({
                                 link: '',
                                 title: '',
+                                company: '',
                                 description: '',
                                 category: '',
                                 endDate: '',
@@ -308,9 +312,36 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                     value={title}
                                                     onChange={handleChange('title')}
                                                 />
-                                                <FormHelperText fontStyle='italic' fontSize='0.85rem'>
-                                                    Use good format. E.g: Web Developer at Google
-                                                </FormHelperText>
+                                            </FormControl>
+                                        </Box>
+
+                                        <Box>
+                                            <FormControl id='description' mt={1} isRequired>
+                                                <FormLabel
+                                                    fontSize='sm'
+                                                    fontWeight='md'
+                                                    color='gray.700'
+                                                    _dark={{
+                                                        color: 'gray.50',
+                                                    }}
+                                                >
+                                                    Company
+                                                </FormLabel>
+
+                                                <Input
+                                                    _dark={{
+                                                        _placeholder: { color: 'gray.200' },
+                                                    }}
+                                                    placeholder='Enter company'
+                                                    mt={1}
+                                                    shadow='sm'
+                                                    focusBorderColor='brand.400'
+                                                    fontSize={{
+                                                        sm: 'sm',
+                                                    }}
+                                                    value={company}
+                                                    onChange={handleChange('company')}
+                                                />
                                             </FormControl>
                                         </Box>
 

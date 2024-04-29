@@ -146,7 +146,7 @@ const Login = () => {
                     <Box
                         rounded={'lg'}
                         bg={useColorModeValue('white', 'gray.700')}
-                        boxShadow={'md'}
+                        boxShadow={'sm'}
                         p={8}
                     >
                         <Stack spacing={4} color='gray.600'>

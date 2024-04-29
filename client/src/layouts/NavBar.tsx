@@ -52,7 +52,7 @@ const NavBar = () => {
                     >
                         <Link
                             href='/'
-                            className='logo'
+                            className='logo selectable'
                             _hover={{
                                 textDecoration: 'none',
                             }}

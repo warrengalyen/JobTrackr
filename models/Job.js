@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const JobSchema = new Schema(
     {
-        company: {
+        title: {
             type: String,
             required: true,
         },
-        title: {
+        company: {
             type: String,
             required: true,
         },

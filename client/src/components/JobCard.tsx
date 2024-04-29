@@ -240,7 +240,7 @@ const JobCard = ({
 
                 <Box mt={2}>
                     <Link
-                        fontSize='1.09rem'
+                        fontSize='1.05rem'
                         color={status === 'closed' ? 'gray.600' : 'gray.700'}
                         _dark={{
                             color: status === 'closed' ? 'gray.400' : 'gray.50',
@@ -256,7 +256,7 @@ const JobCard = ({
                         href={`${link}`}
                         target={`_blank`}
                     >
-                        {title} - {company}
+                        <chakra.h2>{title} - {company}</chakra.h2>
                     </Link>
                     <chakra.p
                         mt={2}
@@ -290,6 +290,7 @@ const JobCard = ({
                             }}
                             fontSize='0.9rem'
                             fontWeight='700'
+                            cursor='pointer'
                         >
                             {domain}
                         </Box>
