@@ -24,6 +24,7 @@ interface JobInfo {
     jobId: string;
     link: string;
     title: string;
+    company: string;
     description?: string;
     location: string;
     category: string;
@@ -71,6 +72,7 @@ const JobCard = ({
         jobId: '',
         link: '',
         title: '',
+        company: '',
         description: '',
         location: '',
         category: '',
@@ -371,6 +373,7 @@ const JobCard = ({
                                     jobId: job._id,
                                     link: job.link,
                                     title: job.title,
+                                    company: job.company,
                                     description: job.description,
                                     location: job.location,
                                     category: job.category._id,

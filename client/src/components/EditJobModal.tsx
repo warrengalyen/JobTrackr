@@ -119,8 +119,6 @@ const EditJobModal = ({
         }
     };
 
-    console.log(location)
-
     return (
         <Box>
             <Slide

@@ -25,8 +25,6 @@ const Stats = () => {
     let lastMonth = month[date.getMonth() - 1];
     let lastThreeMonth = month[date.getMonth() - 2];
 
-    console.log(thisMonth);
-
     return (
         <>
             <Box
