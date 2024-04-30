@@ -30,7 +30,7 @@ const JobSchema = new Schema(
             type: String,
             required: false,
         },
-        endDate: {
+        appliedDate: {
             type: Date,
             required: true,
         },
@@ -55,6 +55,14 @@ const JobSchema = new Schema(
                 'rejected',
                 'assessment',
                 'interview',
+            ],
+        },
+        location: {
+            type: String,
+            enum: [
+                'on-site',
+                'hybrid',
+                'remote',
             ],
         },
     },

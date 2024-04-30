@@ -101,12 +101,13 @@ exports.fetchJob = async (req, res) => {
 
 exports.addJob = async (req, res) => {
     try {
-        let { link, company, title, description, category, image, endDate } =
+        let { link, company, title, description, location, category, image, appliedDate } =
             req.body.jobDetails;
 
         // validate fields
         if (!company) return res.status(400).send('Please enter company name');
         if (!link) return res.status(400).send('Please enter url');
+        if (!location) return res.status(400).send('Please select location');
         if (!category) return res.status(400).send('Please select category');
 
         // check if job with same link exists
@@ -136,7 +137,7 @@ exports.addJob = async (req, res) => {
             status: 'applied',
             sld: parsed.sld,
             domain: parsed.domain,
-            endDate,
+            appliedDate,
         });
 
         await job.save();
@@ -164,11 +165,12 @@ exports.addJob = async (req, res) => {
 
 exports.editJob = async (req, res) => {
     try {
-        let { jobId, link, title, description, category, endDate } =
+        let { jobId, link, title, description, location, category, appliedDate } =
             req.body.jobDetails;
 
         // validate fields
         if (!link) return res.status(400).send('Please enter url');
+        if (!location) return res.status(400).send('Please select location');
         if (!category) return res.status(400).send('Please select category');
 
         const domain = new URL(link).hostname;
@@ -178,12 +180,13 @@ exports.editJob = async (req, res) => {
             link,
             title,
             description,
+            location,
             category,
             user: req.params.userId,
             status: 'applied',
             sld: parsed.sld,
             domain: parsed.domain,
-            endDate,
+            appliedDate,
         };
 
         await Job.findOneAndUpdate(

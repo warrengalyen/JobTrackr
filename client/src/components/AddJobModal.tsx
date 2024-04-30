@@ -29,8 +29,9 @@ interface JobInfo {
     title: string;
     company: string;
     description?: string;
+    location: '',
     category: string;
-    endDate: string;
+    appliedDate: string;
     image: string;
 }
 
@@ -47,12 +48,13 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
         title: '',
         company: '',
         description: '',
+        location: '',
         category: '',
-        endDate: '',
+        appliedDate: '',
         image: '',
     });
 
-    const { link, title, company, description, category, endDate } = jobDetails;
+    const { link, title, company, description, location, category, appliedDate } = jobDetails;
 
     useOutsideClick({
         ref: ref,
@@ -121,8 +123,9 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                         title: '',
                         company: '',
                         description: '',
+                        location: '',
                         category: '',
-                        endDate: '',
+                        appliedDate: '',
                         image: '',
                     });
                 }, 2000);
@@ -184,8 +187,9 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                 title: '',
                                 company: '',
                                 description: '',
+                                location: '',
                                 category: '',
-                                endDate: '',
+                                appliedDate: '',
                                 image: '',
                             });
                         }}
@@ -376,6 +380,51 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                             </FormControl>
                                         </Box>
                                         <Box>
+                                            <FormControl id='location' isRequired>
+                                                <FormLabel
+                                                    htmlFor='country'
+                                                    fontSize='sm'
+                                                    fontWeight='md'
+                                                    color='gray.700'
+                                                    _dark={{
+                                                        color: 'gray.50',
+                                                    }}
+                                                >
+                                                    Location type
+                                                </FormLabel>
+                                                <Select
+                                                    placeholder='Select location'
+                                                    mt={1}
+                                                    focusBorderColor='brand.400'
+                                                    shadow='sm'
+                                                    size='sm'
+                                                    w='full'
+                                                    rounded='md'
+                                                    value={location}
+                                                    onChange={handleChange('location')}
+                                                >
+                                                    <option
+                                                        value={'on-site'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        on-site
+                                                    </option>
+                                                    <option
+                                                        value={'hybrid'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        hybrid
+                                                    </option>
+                                                    <option
+                                                        value={'remote'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        remote
+                                                    </option>
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                        <Box>
                                             <FormControl id='category' isRequired>
                                                 <FormLabel
                                                     htmlFor='country'
@@ -413,7 +462,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                             </FormControl>
                                         </Box>
                                         <Box>
-                                            <FormControl id='endDate' mt={1}>
+                                            <FormControl id='appliedDate' mt={1} isRequired>
                                                 <FormLabel
                                                     fontSize='sm'
                                                     fontWeight='md'
@@ -422,7 +471,7 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                         color: 'gray.50',
                                                     }}
                                                 >
-                                                    Close Date
+                                                    Application Date
                                                 </FormLabel>
                                                 <Input
                                                     type='date'
@@ -432,8 +481,8 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                     fontSize={{
                                                         sm: 'sm',
                                                     }}
-                                                    value={endDate}
-                                                    onChange={handleChange('endDate')}
+                                                    value={appliedDate}
+                                                    onChange={handleChange('appliedDate')}
                                                 />
                                             </FormControl>
                                         </Box>

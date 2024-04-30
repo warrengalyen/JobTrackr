@@ -38,7 +38,7 @@ const EditJobModal = ({
     const [loading, setLoading] = useState<Boolean>(false);
     const [loading2, setLoading2] = useState<Boolean>(false);
 
-    const { link, title, description, category, endDate } = jobDetails;
+    const { link, title, company, description, location, category, appliedDate } = jobDetails;
 
     useOutsideClick({
         ref: ref,
@@ -118,6 +118,8 @@ const EditJobModal = ({
             });
         }
     };
+
+    console.log(location)
 
     return (
         <Box>
@@ -255,9 +257,36 @@ const EditJobModal = ({
                                                     value={title}
                                                     onChange={handleChange('title')}
                                                 />
-                                                <FormHelperText fontStyle='italic' fontSize='0.85rem'>
-                                                    Use good format. E.g: Web Developer at Google
-                                                </FormHelperText>
+                                            </FormControl>
+                                        </Box>
+
+                                        <Box>
+                                            <FormControl id='description' mt={1} isRequired>
+                                                <FormLabel
+                                                    fontSize='sm'
+                                                    fontWeight='md'
+                                                    color='gray.700'
+                                                    _dark={{
+                                                        color: 'gray.50',
+                                                    }}
+                                                >
+                                                    Company
+                                                </FormLabel>
+
+                                                <Input
+                                                    _dark={{
+                                                        _placeholder: { color: 'gray.200' },
+                                                    }}
+                                                    placeholder='Enter company'
+                                                    mt={1}
+                                                    shadow='sm'
+                                                    focusBorderColor='brand.400'
+                                                    fontSize={{
+                                                        sm: 'sm',
+                                                    }}
+                                                    value={company}
+                                                    onChange={handleChange('company')}
+                                                />
                                             </FormControl>
                                         </Box>
 
@@ -288,6 +317,51 @@ const EditJobModal = ({
                                                     value={description}
                                                     onChange={handleChange('description')}
                                                 />
+                                            </FormControl>
+                                        </Box>
+                                        <Box>
+                                            <FormControl id='location' isRequired>
+                                                <FormLabel
+                                                    htmlFor='country'
+                                                    fontSize='sm'
+                                                    fontWeight='md'
+                                                    color='gray.700'
+                                                    _dark={{
+                                                        color: 'gray.50',
+                                                    }}
+                                                >
+                                                    Location type
+                                                </FormLabel>
+                                                <Select
+                                                    placeholder='Select location'
+                                                    mt={1}
+                                                    focusBorderColor='brand.400'
+                                                    shadow='sm'
+                                                    size='sm'
+                                                    w='full'
+                                                    rounded='md'
+                                                    value={location}
+                                                    onChange={handleChange('location')}
+                                                >
+                                                    <option
+                                                        value={'on-site'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        on-site
+                                                    </option>
+                                                    <option
+                                                        value={'hybrid'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        hybrid
+                                                    </option>
+                                                    <option
+                                                        value={'remote'}
+                                                        style={{textTransform: 'capitalize'}}
+                                                    >
+                                                        remote
+                                                    </option>
+                                                </Select>
                                             </FormControl>
                                         </Box>
                                         <Box>
@@ -332,7 +406,7 @@ const EditJobModal = ({
                                             </FormControl>
                                         </Box>
                                         <Box>
-                                            <FormControl id='endDate' mt={1}>
+                                            <FormControl id='appliedDate' mt={1} isRequired>
                                                 <FormLabel
                                                     fontSize='sm'
                                                     fontWeight='md'
@@ -341,7 +415,7 @@ const EditJobModal = ({
                                                         color: 'gray.50',
                                                     }}
                                                 >
-                                                    Close Date
+                                                    Application Date
                                                 </FormLabel>
                                                 <Input
                                                     type='date'
@@ -352,9 +426,9 @@ const EditJobModal = ({
                                                         sm: 'sm',
                                                     }}
                                                     value={
-                                                        endDate && moment(endDate).format('YYYY-MM-DD')
+                                                        appliedDate && moment(appliedDate).format('YYYY-MM-DD')
                                                     }
-                                                    onChange={handleChange('endDate')}
+                                                    onChange={handleChange('appliedDate')}
                                                 />
                                             </FormControl>
                                         </Box>

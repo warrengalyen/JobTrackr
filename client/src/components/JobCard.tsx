@@ -25,8 +25,9 @@ interface JobInfo {
     link: string;
     title: string;
     description?: string;
+    location: string;
     category: string;
-    endDate: string;
+    appliedDate: string;
 }
 
 const Website = require('../public/images/website.png');
@@ -51,6 +52,7 @@ const JobCard = ({
         company,
         title,
         description,
+        location,
         category,
         appliedDate,
         domain,
@@ -70,8 +72,9 @@ const JobCard = ({
         link: '',
         title: '',
         description: '',
+        location: '',
         category: '',
-        endDate: '',
+        appliedDate: '',
     });
     const [currentStatus, setCurrentStatus] = useState<string | null>('');
 
@@ -153,6 +156,30 @@ const JobCard = ({
                             {moment(appliedDate).format('MMM Do, YYYY')}
                         </Tooltip>
                     </chakra.span>
+                    {location != undefined &&
+                        <Box
+                            ref={ref}
+                            display='flex'
+                            alignItems='center'
+                            as='span'
+                            px={2}
+                            py={1}
+                            cursor='pointer'
+                            bg={colors[status]}
+                            color='gray.100'
+                            fontSize='0.7rem'
+                            rounded='md'
+                            _hover={{
+                                bg: colors_hover[status],
+                            }}
+                            textTransform='capitalize'
+                            position='relative'
+                            marginLeft='auto'
+                            marginRight='5px'
+                        >
+                            {location}
+                        </Box>
+                    }
                     <Box
                         ref={ref}
                         display='flex'
@@ -345,8 +372,9 @@ const JobCard = ({
                                     link: job.link,
                                     title: job.title,
                                     description: job.description,
+                                    location: job.location,
                                     category: job.category._id,
-                                    endDate: job.endDate,
+                                    appliedDate: job.appliedDate,
                                 });
                                 editModal.onOpen();
                             }}
