@@ -131,6 +131,7 @@ exports.addJob = async (req, res) => {
             company,
             title,
             description,
+            location,
             category,
             image: image,
             user: req.params.userId,
