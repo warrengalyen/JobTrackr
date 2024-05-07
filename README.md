@@ -2,6 +2,8 @@
 
 JobTrackr is a web application that allows to you record and keep track of your job applications. You can now ditch excel and use use jobtrackr which is easier and faster to use. Categorize and seamlessly manage your job applications.
 
+<b>Tech Stack:</b> React, Express, MongoDB, Google OAuth 2.0
+
 ![JobTrackr Image](client/src/public/images/hero.png)
 
 ## Features
