@@ -377,6 +377,9 @@ const AddJobModal = ({ onClose, isOpen, categories }: any) => {
                                                     value={description}
                                                     onChange={handleChange('description')}
                                                 />
+                                                <FormHelperText fontStyle='italic' fontSize='0.85rem'>
+                                                    Misc info. E.g. job description, salary range, role type (contract)
+                                                </FormHelperText>
                                             </FormControl>
                                         </Box>
                                         <Box>
