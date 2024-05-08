@@ -99,7 +99,7 @@ const App = () => {
                     isAuthenticated().token
                 ));
             setJobStats(res.data);
-        } catch (error: any) {
+        } catch (error) {
             console.log(error.response.data);
         }
     };

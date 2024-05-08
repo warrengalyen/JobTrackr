@@ -6,6 +6,7 @@ const cheerio = require('cheerio');
 const psl = require('psl');
 var { ObjectID } = require('mongodb');
 const AbortController = require('abort-controller');
+const moment = require("moment");
 
 exports.getJobs = async (req, res) => {
     try {
@@ -109,6 +110,7 @@ exports.addJob = async (req, res) => {
         if (!link) return res.status(400).send('Please enter url');
         if (!location) return res.status(400).send('Please select location');
         if (!category) return res.status(400).send('Please select category');
+        if (!appliedDate) return res.status(400).send('Please select application date');
 
         // check if job with same link exists
         let jobExist = await Job.findOne({
@@ -125,6 +127,8 @@ exports.addJob = async (req, res) => {
 
         if (parsed.domain === 'indeed.com')
             image = 'https://indeed.com/images/favicon.ico';
+
+        appliedDate = moment(appliedDate).toISOString();
 
         const job = new Job({
             link,
@@ -176,6 +180,8 @@ exports.editJob = async (req, res) => {
 
         const domain = new URL(link).hostname;
         const parsed = psl.parse(domain);
+
+        appliedDate = moment(appliedDate).toISOString();
 
         const editJob = {
             link,
