@@ -101,17 +101,8 @@ exports.login = async (req, res) => {
             }
             //Generate jwt signed token and send as response to client
             let token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-                expiresIn: '7d',
+                expiresIn: '30d',
             });
-
-            const today = new Date();
-
-            Job.updateMany(
-                { endDate: { $lte: today } },
-                {
-                    $set: { status: 'closed' },
-                }
-            );
 
             return res.json({
                 token,
@@ -160,15 +151,6 @@ exports.signinGoogle = async (req, res) => {
 
                 await category.save();
             }
-
-            const today = new Date();
-
-            await Job.updateMany(
-                { endDate: { $lte: today } },
-                {
-                    $set: { status: 'closed' },
-                }
-            );
 
             const new_user = await User.findOne({ email: profile?.email });
 
